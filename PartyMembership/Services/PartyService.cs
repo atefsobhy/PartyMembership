@@ -22,9 +22,9 @@ namespace PartyMembership.Services
             return party;
         }
 
-        public List<Party> GetAllParties()
+        public async Task<List<Party>> GetAllPartiesAsync()
         {
-            return  _appDbContext.Parties.ToList();
+            return  await _appDbContext.Parties.ToListAsync();
         }
 
         public async Task<bool> AddPartyAsync(Party party)

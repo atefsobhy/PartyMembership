@@ -75,13 +75,13 @@
     string PartyId { get; set; }
 
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         GenderId = MemberModel.GenderId.ToString();
         PartyId = MemberModel.PartyId.ToString();
 
         genders =  _memberService.GetAllGenders();
-        parties =   _partyService.GetAllParties();
+        parties =   await _partyService.GetAllPartiesAsync();
     }
 
 

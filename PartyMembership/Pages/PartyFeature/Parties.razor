@@ -50,9 +50,9 @@
     @code {
         List<Party> parties;
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            parties = _partyService.GetAllParties();
+            parties = await _partyService.GetAllPartiesAsync();
         }
 
     }
