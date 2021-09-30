@@ -1,0 +1,62 @@
+﻿@page "/Members"
+@using Models
+@inject Services.MemberService _memberService
+
+
+    <NavLink class="nav-link" href="AddMember">
+        <span class="oi oi-plus" aria-hidden="true">Add New</span>
+    </NavLink>
+<h3>Members List</h3>
+
+
+@if (members is null)
+{
+    <p>Loading....</p>
+}
+else {
+    <table class="table">
+        <thead>
+            <tr>
+                <th>MemberId</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Dob</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Party</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var member in members)
+            {
+                <tr>
+                    <td>@member.MemberId</td>
+                    <td>@member.FirstName</td>
+                    <td>@member.LastName</td>
+                    <td>@member.DateOfBirth</td>
+                    <td>@member.Email</td>
+                    <td>@member.Gender.Label</td>
+                    <td>@member.Party.Name</td>
+                    <td>
+                    <a class="nav-link" href="MemberDetails/@member.MemberId">
+                        <span class="oi oi-pencil" aria-hidden="true">Edit</span>
+                    </a>
+                </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code { 
+
+    List<Member> members;
+
+    protected override async Task OnInitializedAsync()
+    {
+         members = await _memberService.GetAllMembersAsync();
+    }
+
+}

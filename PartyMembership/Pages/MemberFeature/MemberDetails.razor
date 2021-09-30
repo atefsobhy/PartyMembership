@@ -1,0 +1,45 @@
+﻿@page "/MemberDetails/{memberId}"
+@using Models
+@inject Services.MemberService _memberService
+@inject NavigationManager _navigationManager
+<h3>Member Details</h3>
+
+<div class="col-sm-8">
+    <div class="card">
+        @if (member != null && member.Party != null)
+        {
+            <div class="card-header">
+                <h2>@member.FirstName  @member.LastName</h2>
+            </div>
+            <div class="card-body text-center">
+                <h4>Member ID : @member.MemberId</h4>
+                <h4>Party : @member.Party.Name</h4>
+            </div>
+            <div class="card-footer text-center">
+                <a class="btn btn-primary" href="/members">Back</a>
+                <a class="btn btn-primary" href="updatemember/@member.MemberId">Edit</a>
+                <button class="btn btn-danger" @onclick="DeleteMember">Delete</button>
+            </div>
+        }
+    </div>
+    </div>
+
+    @code {
+
+        [Parameter]
+        public string MemberId { get; set; }
+
+        public Member member { get; set; } = new Member();
+
+        protected override async Task OnInitializedAsync()
+        {
+            member = await _memberService.GetMemberAsync(int.Parse(MemberId));
+        }
+
+        protected async void DeleteMember()
+        {
+            await _memberService.DeleteMemberAsync(member);
+            _navigationManager.NavigateTo("Members");
+        }
+
+    }

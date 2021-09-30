@@ -1,0 +1,74 @@
+﻿@page "/updateparty/{partyId}"
+@using Models
+@inject Services.PartyService _partyService
+@inject NavigationManager _navigationManager
+
+<h3>Update Party</h3>
+
+<EditForm Model="@party" OnValidSubmit="@UpdatePartyAsync">
+    <DataAnnotationsValidator />
+    @*<ValidationSummary />*@
+    <div>
+        <label>Name</label>
+        <InputText id="name" class="form-control" @bind-Value="party.Name" />
+        <ValidationMessage For="@(()=>party.Name)" />
+    </div>
+    <div>
+        <label>Established</label>
+        <InputDate id="year" class="form-control" @bind-Value="party.Estabslished" />
+    </div>
+
+    <div>
+        <label>Address</label>
+        <InputText id="email" class="form-control" @bind-Value="party.AddressLine1" />
+        <ValidationMessage For="@(()=>party.AddressLine1)" />
+    </div>
+
+    <div>
+        <label>City</label>
+        <InputText id="email" class="form-control" @bind-Value="party.TownCity" />
+        <ValidationMessage For="@(()=>party.TownCity)" />
+    </div>
+
+    <div>
+        <label>Postcode</label>
+        <InputText id="email" class="form-control" @bind-Value="party.PostCode" />
+        <ValidationMessage For="@(()=>party.PostCode)" />
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <input type="button" class="btn btn-secondary" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public string PartyId { get; set; }
+
+    Party party;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        party =  _partyService.GetPartyAsync(int.Parse(PartyId));
+    }
+
+    protected async void UpdatePartyAsync()
+    {
+        await _partyService.UpdatePartyAsync(party);
+        _navigationManager.NavigateTo("Parties");
+    }
+
+    protected void Cancel()
+    {
+        _navigationManager.NavigateTo("Parties");
+    }
+
+}

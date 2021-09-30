@@ -1,0 +1,45 @@
+﻿@page "/PartyDetails/{partyId}"
+@using Models
+@inject Services.PartyService _partyService
+@inject NavigationManager _navigationManager
+<h3>Member Details</h3>
+
+<div class="col-sm-8">
+    <div class="card">
+        @if (party != null)
+        {
+            <div class="card-header">
+                <h2>@party.Name</h2>
+            </div>
+            <div class="card-body text-center">
+                <h4>Party ID : @party.PartyId</h4>
+                <h4>Party : @party.Name</h4>
+            </div>
+            <div class="card-footer text-center">
+                <a class="btn btn-primary" href="/parties">Back</a>
+                <a class="btn btn-primary" href="updateparty/@party.PartyId">Edit</a>
+                <button class="btn btn-danger" @onclick="DeleteParty">Delete</button>
+            </div>
+        }
+    </div>
+    </div>
+
+    @code {
+
+        [Parameter]
+        public string PartyId { get; set; }
+
+        public Party party { get; set; } = new Party();
+
+        protected override async Task OnInitializedAsync()
+        {
+            party =  _partyService.GetPartyAsync(int.Parse(PartyId));
+        }
+
+        protected async void DeleteParty()
+        {
+            await _partyService.DeletePartyAsync(party);
+            _navigationManager.NavigateTo("Parties");
+        }
+
+    }

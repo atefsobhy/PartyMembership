@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PartyMembership.Areas.Identity;
 using PartyMembership.Data;
+using PartyMembership.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,8 @@ namespace PartyMembership
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddScoped<MemberService>();
+            services.AddScoped<PartyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

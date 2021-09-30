@@ -1,0 +1,58 @@
+﻿@page "/parties"
+@using Models
+@inject Services.PartyService _partyService
+
+    <NavLink class="nav-link" href="AddParty">
+        <span class="oi oi-plus" aria-hidden="true">Add New</span>
+    </NavLink>
+
+    <h3>Parties</h3>
+
+    @if (parties is null)
+    {
+        <p>Loading....</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>PartyId</th>
+                    <th>Name</th>
+                    <th>Established</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Postcode</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var party in parties)
+                {
+                    <tr>
+                        <td>@party.PartyId</td>
+                        <td>@party.Name</td>
+                        <td>@party.Estabslished</td>
+                        <td>@party.AddressLine1</td>
+                        <td>@party.TownCity</td>
+                        <td>@party.PostCode</td>
+                        <td>
+                            <a class="nav-link" href="PartyDetails/@party.PartyId">
+                                <span class="oi oi-pencil" aria-hidden="true">Edit</span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @code {
+        List<Party> parties;
+
+        protected override void OnInitialized()
+        {
+            parties = _partyService.GetAllParties();
+        }
+
+    }
