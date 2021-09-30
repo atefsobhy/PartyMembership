@@ -16,7 +16,7 @@ namespace PartyMembership.Services
         {
             _appDbContext = appDbContext;
         }
-        public Party GetPartyAsync(int Id)
+        public Party GetParty(int Id)
         {
             var party =  _appDbContext.Parties.FirstOrDefault(x => x.PartyId.Equals(Id));
             return party;

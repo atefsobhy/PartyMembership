@@ -6,18 +6,18 @@
 
 <div class="col-sm-8">
     <div class="card">
-        @if (member != null && member.Party != null)
+        @if (MemberModel != null && MemberModel.Party != null)
         {
             <div class="card-header">
-                <h2>@member.FirstName  @member.LastName</h2>
+                <h2>@MemberModel.FirstName  @MemberModel.LastName</h2>
             </div>
             <div class="card-body text-center">
-                <h4>Member ID : @member.MemberId</h4>
-                <h4>Party : @member.Party.Name</h4>
+                <h4>Member ID : @MemberModel.MemberId</h4>
+                <h4>Party : @MemberModel.Party.Name</h4>
             </div>
             <div class="card-footer text-center">
                 <a class="btn btn-primary" href="/members">Back</a>
-                <a class="btn btn-primary" href="updatemember/@member.MemberId">Edit</a>
+                <a class="btn btn-primary" href="updatemember/@MemberModel.MemberId">Edit</a>
                 <button class="btn btn-danger" @onclick="DeleteMember">Delete</button>
             </div>
         }
@@ -29,16 +29,16 @@
         [Parameter]
         public string MemberId { get; set; }
 
-        public Member member { get; set; } = new Member();
+        public Member MemberModel { get; set; } = new Member();
 
         protected override async Task OnInitializedAsync()
         {
-            member = await _memberService.GetMemberAsync(int.Parse(MemberId));
+            MemberModel = await _memberService.GetMemberAsync(int.Parse(MemberId));
         }
 
         protected async void DeleteMember()
         {
-            await _memberService.DeleteMemberAsync(member);
+            await _memberService.DeleteMemberAsync(MemberModel);
             _navigationManager.NavigateTo("Members");
         }
 

@@ -5,35 +5,35 @@
 
 <h3>Add Party</h3>
 
-<EditForm Model="@party" OnValidSubmit="@CreateParty">
+<EditForm Model="@PartyModel" OnValidSubmit="@CreatePartyAsync">
     <DataAnnotationsValidator />
     @*<ValidationSummary />*@
     <div>
         <label>Name</label>
-        <InputText id="name" class="form-control" @bind-Value="party.Name" />
-        <ValidationMessage For="@(()=>party.Name)" />
+        <InputText id="name" class="form-control" @bind-Value="PartyModel.Name" />
+        <ValidationMessage For="@(()=>PartyModel.Name)" />
     </div>
     <div>
         <label>Established</label>
-        <InputDate id="year" class="form-control" @bind-Value="party.Estabslished" />
+        <InputDate id="year" class="form-control" @bind-Value="PartyModel.Estabslished" />
     </div>
 
     <div>
         <label>Address</label>
-        <InputText id="email" class="form-control" @bind-Value="party.AddressLine1" />
-        <ValidationMessage For="@(()=>party.AddressLine1)" />
+        <InputText id="email" class="form-control" @bind-Value="PartyModel.AddressLine1" />
+        <ValidationMessage For="@(()=>PartyModel.AddressLine1)" />
     </div>
 
     <div>
         <label>City</label>
-        <InputText id="email" class="form-control" @bind-Value="party.TownCity" />
-        <ValidationMessage For="@(()=>party.TownCity)" />
+        <InputText id="email" class="form-control" @bind-Value="PartyModel.TownCity" />
+        <ValidationMessage For="@(()=>PartyModel.TownCity)" />
     </div>
 
     <div>
         <label>Postcode</label>
-        <InputText id="email" class="form-control" @bind-Value="party.PostCode" />
-        <ValidationMessage For="@(()=>party.PostCode)" />
+        <InputText id="email" class="form-control" @bind-Value="PartyModel.PostCode" />
+        <ValidationMessage For="@(()=>PartyModel.PostCode)" />
     </div>
 
 
@@ -51,12 +51,12 @@
 
 @code {
 
-    Party party = new Party();
+    Party PartyModel = new Party();
 
-    private async Task CreateParty()
+    private async Task CreatePartyAsync()
     {
 
-        await _partyService.AddPartyAsync(party);
+        await _partyService.AddPartyAsync(PartyModel);
 
         _navigationManager.NavigateTo("Parties");
     }

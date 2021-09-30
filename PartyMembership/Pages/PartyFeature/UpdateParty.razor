@@ -5,35 +5,35 @@
 
 <h3>Update Party</h3>
 
-<EditForm Model="@party" OnValidSubmit="@UpdatePartyAsync">
+<EditForm Model="@PartyModel" OnValidSubmit="@UpdatePartyAsync">
     <DataAnnotationsValidator />
     @*<ValidationSummary />*@
     <div>
         <label>Name</label>
-        <InputText id="name" class="form-control" @bind-Value="party.Name" />
-        <ValidationMessage For="@(()=>party.Name)" />
+        <InputText id="name" class="form-control" @bind-Value="PartyModel.Name" />
+        <ValidationMessage For="@(()=>PartyModel.Name)" />
     </div>
     <div>
         <label>Established</label>
-        <InputDate id="year" class="form-control" @bind-Value="party.Estabslished" />
+        <InputDate id="year" class="form-control" @bind-Value="PartyModel.Estabslished" />
     </div>
 
     <div>
         <label>Address</label>
-        <InputText id="email" class="form-control" @bind-Value="party.AddressLine1" />
-        <ValidationMessage For="@(()=>party.AddressLine1)" />
+        <InputText id="email" class="form-control" @bind-Value="PartyModel.AddressLine1" />
+        <ValidationMessage For="@(()=>PartyModel.AddressLine1)" />
     </div>
 
     <div>
         <label>City</label>
-        <InputText id="email" class="form-control" @bind-Value="party.TownCity" />
-        <ValidationMessage For="@(()=>party.TownCity)" />
+        <InputText id="email" class="form-control" @bind-Value="PartyModel.TownCity" />
+        <ValidationMessage For="@(()=>PartyModel.TownCity)" />
     </div>
 
     <div>
         <label>Postcode</label>
-        <InputText id="email" class="form-control" @bind-Value="party.PostCode" />
-        <ValidationMessage For="@(()=>party.PostCode)" />
+        <InputText id="email" class="form-control" @bind-Value="PartyModel.PostCode" />
+        <ValidationMessage For="@(()=>PartyModel.PostCode)" />
     </div>
 
 
@@ -53,16 +53,16 @@
     [Parameter]
     public string PartyId { get; set; }
 
-    Party party;
+    Party PartyModel;
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnInitialized()
     {
-        party =  _partyService.GetPartyAsync(int.Parse(PartyId));
+        PartyModel =  _partyService.GetParty(int.Parse(PartyId));
     }
 
     protected async void UpdatePartyAsync()
     {
-        await _partyService.UpdatePartyAsync(party);
+        await _partyService.UpdatePartyAsync(PartyModel);
         _navigationManager.NavigateTo("Parties");
     }
 

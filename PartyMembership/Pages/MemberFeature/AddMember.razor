@@ -6,29 +6,29 @@
 
 <h3>AddMember</h3>
 
-<EditForm Model="@member" OnValidSubmit="@CreateMember">
+<EditForm Model="@MemberModel" OnValidSubmit="@CreateMember">
     <DataAnnotationsValidator />
     @*<ValidationSummary />*@
     <div>
         <label>First Name</label>
-        <InputText id="firstname" class="form-control" @bind-Value="member.FirstName" />
-        <ValidationMessage For="@(()=>member.FirstName)" />
+        <InputText id="firstname" class="form-control" @bind-Value="MemberModel.FirstName" />
+        <ValidationMessage For="@(()=>MemberModel.FirstName)" />
     </div>
     <div>
         <label>Last Name</label>
-        <InputText id="lastname" class="form-control" @bind-Value="member.LastName" />
-        <ValidationMessage For="@(()=>member.LastName)"/>
+        <InputText id="lastname" class="form-control" @bind-Value="MemberModel.LastName" />
+        <ValidationMessage For="@(()=>MemberModel.LastName)"/>
     </div>
     <div>
         <label>Dob</label>
-        <InputDate id="dob" class="form-control" @bind-Value="member.DateOfBirth" />
-        <ValidationMessage For="@(()=>member.DateOfBirth)" />
+        <InputDate id="dob" class="form-control" @bind-Value="MemberModel.DateOfBirth" />
+        <ValidationMessage For="@(()=>MemberModel.DateOfBirth)" />
     </div>
 
     <div>
         <label>Email</label>
-        <InputText id="email" class="form-control" @bind-Value="member.Email" />
-        <ValidationMessage For="@(()=>member.Email)" />
+        <InputText id="email" class="form-control" @bind-Value="MemberModel.Email" />
+        <ValidationMessage For="@(()=>MemberModel.Email)" />
     </div>
 
     <div>
@@ -40,7 +40,7 @@
                 <option value="@gender.GenderId">@gender.Label</option>
             }
         </InputSelect>
-        <ValidationMessage For="@(()=>member.Gender)" />
+        <ValidationMessage For="@(()=>MemberModel.Gender)" />
     </div>
 
     <div>
@@ -52,7 +52,7 @@
                 <option value="@party.PartyId">@party.Name</option>
             }
         </InputSelect>
-        <ValidationMessage For="@(()=>member.Party)" />
+        <ValidationMessage For="@(()=>MemberModel.Party)" />
     </div>
 
     <div class="row">
@@ -70,15 +70,15 @@
 @code {
     List<Gender> genders;
     List<Party> parties;
-    Member member = new Member();
+    Member MemberModel = new Member();
     string GenderId { get; set; }
     string PartyId { get; set; }
 
 
     protected override void OnInitialized()
     {
-        GenderId = member.GenderId.ToString();
-        PartyId = member.PartyId.ToString();
+        GenderId = MemberModel.GenderId.ToString();
+        PartyId = MemberModel.PartyId.ToString();
 
         genders =  _memberService.GetAllGenders();
         parties =   _partyService.GetAllParties();
@@ -87,10 +87,10 @@
 
     private async Task CreateMember()
     {
-        member.GenderId = int.Parse(GenderId);
-        member.PartyId = int.Parse(PartyId);
+        MemberModel.GenderId = int.Parse(GenderId);
+        MemberModel.PartyId = int.Parse(PartyId);
 
-        await _memberService.AddMemberAsync(member);
+        await _memberService.AddMemberAsync(MemberModel);
 
         _navigationManager.NavigateTo("Members");
     }

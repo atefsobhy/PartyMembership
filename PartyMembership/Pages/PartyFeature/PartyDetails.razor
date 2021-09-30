@@ -6,18 +6,18 @@
 
 <div class="col-sm-8">
     <div class="card">
-        @if (party != null)
+        @if (PartyModel != null)
         {
             <div class="card-header">
-                <h2>@party.Name</h2>
+                <h2>@PartyModel.Name</h2>
             </div>
             <div class="card-body text-center">
-                <h4>Party ID : @party.PartyId</h4>
-                <h4>Party : @party.Name</h4>
+                <h4>Party ID : @PartyModel.PartyId</h4>
+                <h4>Party : @PartyModel.Name</h4>
             </div>
             <div class="card-footer text-center">
                 <a class="btn btn-primary" href="/parties">Back</a>
-                <a class="btn btn-primary" href="updateparty/@party.PartyId">Edit</a>
+                <a class="btn btn-primary" href="updateparty/@PartyModel.PartyId">Edit</a>
                 <button class="btn btn-danger" @onclick="DeleteParty">Delete</button>
             </div>
         }
@@ -29,16 +29,16 @@
         [Parameter]
         public string PartyId { get; set; }
 
-        public Party party { get; set; } = new Party();
+        public Party PartyModel { get; set; } = new Party();
 
         protected override async Task OnInitializedAsync()
         {
-            party =  _partyService.GetPartyAsync(int.Parse(PartyId));
+            PartyModel =  _partyService.GetParty(int.Parse(PartyId));
         }
 
         protected async void DeleteParty()
         {
-            await _partyService.DeletePartyAsync(party);
+            await _partyService.DeletePartyAsync(PartyModel);
             _navigationManager.NavigateTo("Parties");
         }
 
